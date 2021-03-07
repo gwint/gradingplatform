@@ -1,31 +1,34 @@
 <html>
     <head>
         <script type="text/javascript">
+
             document.addEventListener("DOMContentLoaded", function(event) {
 
-            alert("hello");
+		    const LOGINSVCURL = "https://1v6h7vbzle.execute-api.us-east-1.amazonaws.com/dev";
+		    const USERINFOSVCURL = "https://f9eibh3avi.execute-api.us-east-1.amazonaws.com/dev";
 
-            const LOGINSVCURL = "https://1v6h7vbzle.execute-api.us-east-1.amazonaws.com/dev";
-            const USERINFOSVCURL = "https://f9eibh3avi.execute-api.us-east-1.amazonaws.com/dev";
+		    const logInBtn = document.getElementById("loginBtn");
 
-            const usernameInput = document.getElementById("username");
-            const username = usernameInput.value;
+		    logInBtn.onclick = function() {
+   		        const usernameInput = document.getElementById("username");
+		        const username = usernameInput.value;
 
-            const passwordInput = document.getElementById("password");
-            const password = passwordInput.value;
+		        const passwordInput = document.getElementById("password");
+		        const password = passwordInput.value;
 
-            const logInBtn = document.getElementById("loginBtn");
+			logIn(username, password, false);
+		    }
 
-            logInBtn.onclick = function() {
-                logIn(username, password, false);
-            };
+		    const signUpBtn = document.getElementById("signupBtn");
+		    signUpBtn.onclick = function() {
+			//logIn(username, password, true);
+		    }
 
-            const signUpBtn = document.getElementById("signupBtn");
-            signUpBtn.onclick = function() {
-                logIn(username, password, true);
-            };
+	    });
 
             function logIn(username, password, isNewUser) {
+		console.log(username);
+		console.log(password);
 	        if(isNewUser) {
 		    console.log(`Logging in user for the first time w/ credentials, u: ${username} p: ${password}`);
 		}
@@ -33,22 +36,8 @@
 		    console.log(`Logging in existent user w/ credentials, u: ${username} p: ${password}`);
 		}
 
-                fetch(LOGINSVCURL, {
-                    "body": JSON.stringify({"username": username, "password": password}),
-                    "method": "POST"
-                })
-                .then(getResponseBody)
-                .then(function(response) {
-                    const signUpSuccessful = response.addedSuccessful;
-                    console.log(signUpSuccessful);
-                    if(signUpSuccessful) {
-                        alert("login successful");
-                        getUserInformation(username);
-                    }
-                    else {
-                        alert("already signed up");
-                    }
-                });
+		// Redirect to url for login
+		location.assign(`http://localhost:8000/login/${username}/${password}/`);
             }
 
             function getUserInformation(username) {
@@ -98,7 +87,6 @@
                 });
             }
 
-            });
 	</script>
     </head>
     <body>

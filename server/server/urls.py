@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^hello/', views.login),
     url(r'^login/([a-zA-Z0-9_]+)/([a-zA-Z0-9_]+)/', views.login),
+    url(r'addupload/', views.addUserUpload),
     url(r'', views.splashpage),
 ]

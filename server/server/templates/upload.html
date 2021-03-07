@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            const ADDUPLOADSVCURL = "";
+	    document.addEventListener("DOMContentLoaded", function(event) {
+	        const fileUploadBtn = document.getElementById("fileUploadBtn");
+		fileUploadBtn.onclick = addUpload;
+            });
+
+
+            function addUpload() {
+                alert("Now sending file data to backend");
+		const fileUploadInput = document.getElementById("fileUploadInput");
+		alert(fileUploadInput.value);
+
+                let reader = new FileReader();
+                reader.onload = function() {
+                    let arrayBuffer = this.result,
+                    array = new Uint8Array(arrayBuffer),
+                    const binaryString = String.fromCharCode.apply(null, array);
+                    alert(binaryString);
+
+		    fetch(ADDUPLOADSVCURL, {
+			"body": JSON.stringify({"uploaddata": binaryString}),
+			"method": "POST"
+		    })
+		    .then(getResponseBody)
+		    .then(function(response) {
+                        const dataUploadSuccessful = response.successful;
+                        console.log(dataUploadSuccessful);
+                        if(dataUploadSuccessful) {
+                            alert("data upload succeeded");
+                        }
+                        else {
+                            alert("data upload failed");
+		        }
+		    }
+                }
+                reader.readAsArrayBuffer(fileUploadInput.files[0]);
+            }
+	</script>
+    </head>
+    <body>
+	<h1>UPLOAD PAGE for {{username}}</h1>
+	<label>Current Batch:</label>
+	<input type="text"></input><br>
+	<form id="userUploadForm" action="http://localhost:8000/addupload" method="PUT">
+            <input type="file" id="fileUploadInput"></input><br>
+	    <button id="fileUploadBtn">Upload Files</button><br>
+	</form>
+	<button id="setUploadFormat">Set Upload Format</button>
+	<center id="quickTestCreationCenter">
+	    <p>The quick test creator will go here</p>
+	    <div>
+	       I would like to check that <select id="itemTypeSelect"></select>, <select id="itemNameSelect"></select> returns a <select id="returnTypeSelect"></select> of <select id="returnValueSelect"></select>.
+	    </div>
+	</center>
+	<center id="customTestCreationCenter">
+	    <p>The custom test creator will go here</p>
+	</center>
+    </body>
+</html>
