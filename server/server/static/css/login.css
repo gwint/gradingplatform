@@ -1,0 +1,45 @@
+body {
+    background-color: lightblue;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+#mainHeaderMessage {
+    color: white;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button {
+    display: block;
+    width: 100px;
+    color: #C25100;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: large;
+}
+
+input {
+    font-size: large;
+    margin: 10px;
+}
+
+#signInCenter {
+    display: block;
+    position: absolute;
+    top: 50%;
+    height: 100px;
+    margin-top: -50px;
+
+    width: 1700px;
+    margin-left: auto;
+    margin-right; auto;
+}
+
+label {
+    font-size: large;
+}
+
+#username {
+}

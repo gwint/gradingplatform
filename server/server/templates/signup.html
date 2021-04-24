@@ -7,21 +7,18 @@
 		    const LOGINSVCURL = "https://1v6h7vbzle.execute-api.us-east-1.amazonaws.com/dev";
 		    const USERINFOSVCURL = "https://f9eibh3avi.execute-api.us-east-1.amazonaws.com/dev";
 
-		    const logInBtn = document.getElementById("loginBtn");
-
-		    logInBtn.onclick = function() {
-   		        const usernameInput = document.getElementById("username");
-		        const username = usernameInput.value;
-
-		        const passwordInput = document.getElementById("password");
-		        const password = passwordInput.value;
-
-			logIn(username, password, false);
-		    }
-
 		    const signUpBtn = document.getElementById("signupBtn");
 		    signUpBtn.onclick = function() {
-			//logIn(username, password, true);
+                        onst usernameInput = document.getElementById("username");
+                        const username = usernameInput.value;
+
+                        const passwordInput = document.getElementById("password");
+                        const password = passwordInput.value;
+
+			const emailInput = document.getElementById("email");
+			const email = emailInput.value;
+
+                        logIn(username, password, true);
 		    }
 
 	    });
@@ -88,20 +85,22 @@
             }
 
 	</script>
-	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+	<link rel="stylesheet" href="{% static 'css/signup.css' %}">
     </head>
     <body>
         <header>
         </header>
-	<title>GradeIt Signup Page</title>
-	<h1 id="mainHeaderMessage">Welcome to GradeIt</h1>
+	<title>{{username}} Account Page</title>
+        <h1 id="mainHeaderMessage">GradeIt</h1>
         <center id="signInCenter">
-            <label for="username">Username</input>
+            <label for="username">Username</label>
             <input type="text" id="username"></input><br>
-            <label for="password">Password&nbsp</input>
+            <label for="password">Password&nbsp</label>
             <input type="text" id="password"></input><br>
-            <button id="loginBtn">Login</button>
-            <button id="signupBtn">Sign Up</button>
+	    <label for="email">Email Address</label>
+	    <input type="text" id="email"></input><br>
+            
+            <button id="signupBtn">Sign Up For GradeIt</button>
         </center>
         <footer>
         </footer>

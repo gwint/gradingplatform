@@ -66,6 +66,7 @@ function getUserInformation(username) {
 
 function getResponseBody(response) {
     if(response.status >= 200 && response.status < 300) {
+        console.log(response);
         return Promise.resolve(response.json());
     }
     else {

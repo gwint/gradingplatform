@@ -1,0 +1,17 @@
+body {
+    background-color: lightblue;
+}
+
+#mainPageMessage {
+    text-align: center;
+    color: white;
+}
+
+#quickTestCreationCenter {
+    visibility: visible; 
+}
+
+#pageTitle {
+    background-color: white;
+    color: white;
+}    

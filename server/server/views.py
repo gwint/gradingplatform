@@ -1,5 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
+
+from json import dumps
 
 from server.dbutils import tryLogin
 
@@ -17,5 +21,7 @@ def splashpage(request):
    response["Content-Type"] = "text/html"
    return render(request, "login.html", {})
 
+@csrf_exempt
 def addUserUpload(request):
-    return HttpResponse("""<p>Add User Upload</p>""")
+    ##return render(request, "upload.html", {})
+    return HttpResponse(dumps({"successful": True}))

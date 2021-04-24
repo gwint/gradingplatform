@@ -1,12 +1,27 @@
+{% load static %}
 <html>
     <head>
         <script type="text/javascript">
-            const ADDUPLOADSVCURL = "";
+            const ADDUPLOADSVCURL = "https://1uamqmqk6k.execute-api.us-east-1.amazonaws.com/dev";
 	    document.addEventListener("DOMContentLoaded", function(event) {
-	        const fileUploadBtn = document.getElementById("fileUploadBtn");
+	        let fileUploadBtn = document.getElementById("fileUploadBtn");
 		fileUploadBtn.onclick = addUpload;
             });
 
+            function makeTestCreationCenterVisible() {
+                let testCreationCenter = document.getElementById("quickTestCreationCenter");
+                testCreationCenter.visibility = "visible";
+            }
+
+            function getResponseBody(response) {
+                if(response.status >= 200 && response.status < 300) {
+	            return Promise.resolve(response.json());
+                }
+                else {
+	            alert("error in response");
+	            return Promise.reject(new Error(response.statusText));
+                }
+            }
 
             function addUpload() {
                 alert("Now sending file data to backend");
@@ -15,8 +30,8 @@
 
                 let reader = new FileReader();
                 reader.onload = function() {
-                    let arrayBuffer = this.result,
-                    array = new Uint8Array(arrayBuffer),
+                    let arrayBuffer = this.result;
+                    let array = new Uint8Array(arrayBuffer);
                     const binaryString = String.fromCharCode.apply(null, array);
                     alert(binaryString);
 
@@ -30,25 +45,33 @@
                         console.log(dataUploadSuccessful);
                         if(dataUploadSuccessful) {
                             alert("data upload succeeded");
+                            makeTestCreationCenterVisible();
                         }
                         else {
                             alert("data upload failed");
 		        }
-		    }
+		    })
+		    .catch(function(error) {
+                        alert("Error encountered when performing data upload!");
+                        console.error(error);
+                    });
                 }
+
                 reader.readAsArrayBuffer(fileUploadInput.files[0]);
             }
 	</script>
+	<link rel="stylesheet" href="{% static 'css/upload.css' %}">
     </head>
     <body>
-	<h1>UPLOAD PAGE for {{username}}</h1>
-	<label>Current Batch:</label>
-	<input type="text"></input><br>
-	<form id="userUploadForm" action="http://localhost:8000/addupload" method="PUT">
+	<title id="pageTitle">{{username}} GradeIt Page</title>
+	<h1 id="mainPageMessage">Welcome to GradeIt, {{username}}</h1>
+	<center id="batchRetrievalCenter">
+	    <label>Current Batch:</label>
+	    <label id="selectedBatch">None Selected</label><br>
             <input type="file" id="fileUploadInput"></input><br>
-	    <button id="fileUploadBtn">Upload Files</button><br>
-	</form>
-	<button id="setUploadFormat">Set Upload Format</button>
+            <button id="fileUploadBtn">Upload Files</button>
+	    <button id="setUploadFormat">Set Upload Format</button>
+	</center>
 	<center id="quickTestCreationCenter">
 	    <p>The quick test creator will go here</p>
 	    <div>
