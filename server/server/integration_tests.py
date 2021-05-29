@@ -1,7 +1,7 @@
 import dbutils
 
 def test_getDbConnection():
-    assert True
+    assert dbutils.getDbConnection()
 
 def test_getEmptyUserData():
     assert True
