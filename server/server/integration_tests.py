@@ -1,10 +1,12 @@
 import dbutils
+import siteutils
+import userinfo
 
 def test_getDbConnection():
     assert dbutils.getDbConnection()
 
 def test_getEmptyUserData():
-    assert dbutils.getEmptyUserData() == {} 
+    assert siteutils.getEmptyUserData() == {} 
 
 def test_getUserInfo():
 
@@ -25,6 +27,21 @@ def test_areUserCredentialsValid_missing():
 
     assert not dbutils.areUserCredentialsValid(testUsername, testPassword)
 
+def test_UserInfo_getters():
+    testUserInfo = userinfo.UserInfo("firstname", "lastname", "username", "password")
+    assert testUserInfo.getFirstname() == "firstname"
+    assert testUserInfo.getLastname() == "lastname"
+    assert testUserInfo.getUsername() == "username"
+    assert testUserInfo.getPassword() == "password"
+
+def test_UserInfo_getUserInfo():
+    for testUserInfo in [userinfo.UserInfo.getUserInfo("username", "password"), \
+            userinfo.UserInfo.getUserInfo("username")]:
+
+        assert testUserInfo.getFirstname() == "firstname"
+        assert testUserInfo.getLastname() == "lastname"
+        assert testUserInfo.getUsername() == "username"
+        assert testUserInfo.getPassword() == "password"
 
 if __name__ == "__main__":
     print("Running tests for db accessor code")
