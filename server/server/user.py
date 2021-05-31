@@ -37,8 +37,8 @@ class User:
                 try:
                     nextUploadId = self.getNextUploadId()
 
-                    uploadInsertQuery = "insert into uploadstbl (uploadname, data) values (%s, %s)"
-                    cursor.execute(uploadInsertQuery, (uploadName, uploadData))
+                    uploadInsertQuery = "insert into uploadstbl (uploadId, uploadname, data) values (%s, %s, %s)"
+                    cursor.execute(uploadInsertQuery, (nextUploadId, uploadName, uploadData))
 
                     usernamexuploadidtblInsertQuery = "insert into usernamexuploadidtbl (username, uploadid) values (%s, %s)"
 
