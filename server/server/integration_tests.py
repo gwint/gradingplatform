@@ -1,6 +1,7 @@
 import dbutils
 import siteutils
 import userinfo
+import user
 
 def test_getDbConnection():
     assert dbutils.getDbConnection()
@@ -42,6 +43,17 @@ def test_UserInfo_getUserInfo():
         assert testUserInfo.getLastname() == "lastname"
         assert testUserInfo.getUsername() == "username"
         assert testUserInfo.getPassword() == "password"
+
+def test_User_getNextUploadId():
+    testUser = user.User("username", "password")
+    nextUploadId = testUser.getNextUploadId()
+    assert nextUploadId > 0
+
+
+def test_User_getUploadIds():
+    testUser = user.User("username", "password")
+    uploadIds = testUser.getUploadIds()
+    assert uploadIds == [2, 3, 4]
 
 if __name__ == "__main__":
     print("Running tests for db accessor code")
