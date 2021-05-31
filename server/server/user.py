@@ -16,12 +16,14 @@ class User:
                 try:
                     uploadIds = []
 
-                    fetchUploadsInfoQuery = "select a.uploadid as uploadid, b.uploadname as uploadname from usernamexuploadidtbl as a inner join uploadstbl as b on a.uploadid=b.uploadid WHERE username=%s"
+                    fetchUploadsInfoQuery = 'select b.uploadid, b.uploadname from usernamexuploadidtbl as a inner join uploadstbl as b on a.uploadid=b.uploadid where a.username=%s'
                     cursor.execute(fetchUploadsInfoQuery, (self._username,))
 
-                    return cursor.fetchall()
+                    return [x for x in cursor.fetchall()]
 
                 except Exception as e:
+                    print(e)
+                    raise e
 
                     return []
 

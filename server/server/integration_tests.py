@@ -49,11 +49,10 @@ def test_User_getNextUploadId():
     nextUploadId = testUser.getNextUploadId()
     assert nextUploadId > 0
 
-
 def test_User_getUploadsInfo():
     testUser = user.User("username", "password")
     uploadIds = testUser.getUploadsInfo()
-    assert uploadIds == [2, 3, 4]
+    assert uploadIds == [{"uploadid": 4, "uploadname":"testupload"}]
 
 def test_User_addUpload():
     testUser = user.User("username", "password")
