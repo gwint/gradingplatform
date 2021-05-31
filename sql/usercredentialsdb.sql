@@ -48,6 +48,7 @@ DROP TABLE IF EXISTS `uploadstbl`;
 CREATE TABLE `uploadstbl` (
   `uploadId` int NOT NULL AUTO_INCREMENT,
   `data` blob,
+  `uploadname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`uploadId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -72,7 +73,8 @@ DROP TABLE IF EXISTS `userinfotbl`;
 CREATE TABLE `userinfotbl` (
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

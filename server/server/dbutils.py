@@ -24,8 +24,7 @@ def getDbConnection():
                            database=DBNAME,
                            cursorclass=pymysql.cursors.DictCursor)
 
-                
-def tryLogin(request, username, password):
+def areUserCredentialsValid(username, password):
     with getDbConnection() as connection:
         with connection.cursor() as cursor:
             sql = "select username from logincredentialstbl where username=%s AND password=%s"
@@ -33,19 +32,8 @@ def tryLogin(request, username, password):
             
             result = cursor.fetchone()
             
-            if not result:
-                print("Login failed")
-                return render(request, "login.html", {})
-            else:
-                print("Login succesful")
-                #sql = "insert into `logincredentialstbl` values (%s, %s)"
-                #cursor.execute(sql, (username, password))
-                #connection.commit()
-                return render(request, "upload.html", {"username": username})
-
-def getEmptyUserData():
-    return {}
-
+            return bool(result)
+                
 def getUserInfo(username):
     with getDbConnection() as connection:
         with connection.cursor() as cursor:
@@ -58,7 +46,3 @@ def getUserInfo(username):
                 return {"addedSuccessful": True, "userInfo": result}
             else:
                 return {"addedSuccessful": False, "userInfo": result}
-
-
-def addUserUpload(username, data):
-    pass

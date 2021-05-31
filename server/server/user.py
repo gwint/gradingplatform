@@ -10,16 +10,16 @@ class User:
         self._username = username
         self._password = password
 
-    def getUploadIds(self):
+    def getUploadsInfo(self):
         with getDbConnection() as connection:
             with connection.cursor() as cursor:
                 try:
                     uploadIds = []
 
-                    fetchUploadIdsQuery = "select uploadid as uploadid from usernamexuploadidtbl WHERE username=%s"
-                    cursor.execute(fetchUploadIdsQuery, (self._username,))
+                    fetchUploadsInfoQuery = "select a.uploadid as uploadid, b.uploadname as uploadname from usernamexuploadidtbl as a inner join uploadstbl as b on a.uploadid=b.uploadid WHERE username=%s"
+                    cursor.execute(fetchUploadsInfoQuery, (self._username,))
 
-                    return [record["uploadid"] for record in cursor.fetchall()]
+                    return cursor.fetchall()
 
                 except Exception as e:
 

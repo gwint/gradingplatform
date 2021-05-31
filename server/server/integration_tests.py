@@ -50,10 +50,15 @@ def test_User_getNextUploadId():
     assert nextUploadId > 0
 
 
-def test_User_getUploadIds():
+def test_User_getUploadsInfo():
     testUser = user.User("username", "password")
-    uploadIds = testUser.getUploadIds()
+    uploadIds = testUser.getUploadsInfo()
     assert uploadIds == [2, 3, 4]
+
+def test_User_addUpload():
+    testUser = user.User("username", "password")
+    #assert testUser.addUpload(b"123abc")
+    assert True
 
 if __name__ == "__main__":
     print("Running tests for db accessor code")

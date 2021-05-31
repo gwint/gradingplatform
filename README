@@ -1,1 +1,19 @@
-This is a java-centered grading platform for computer science assignments
+This is a web-based grading platform for computer science assignments
+
+Databases:
+
+	usercredentialsdb
+	usercredentialsdbcopy
+
+		logincredentialstbl: (WILL REMOVE)
+			username(varchar), password(varchar)
+		
+		uploadtbl:
+			uploadId(int, pkey, auto increment), data(blob), uploadname(varchar)
+
+		userinfotbl:
+			firstname(varchar), lastname(varchar), username(varchar)
+
+		usernamexuploadidtbl:
+			username(varchar), uploadid(int)
+

@@ -2,7 +2,7 @@ import sys
 import os
 import pymysql.cursors
 from django.shortcuts import render
-from dbutils import getDbConnection, areUserCredentialsValid
+from server.dbutils import getDbConnection, areUserCredentialsValid
 
 
 def tryLogin(request, username, password):

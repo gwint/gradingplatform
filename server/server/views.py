@@ -5,12 +5,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from json import dumps
 
-from server.dbutils import tryLogin
+from server.siteutils import tryLogin
 
 def login(request, username, password):
-   print("username: ", username)
-   print("password: ", password)
-
    return tryLogin(request, username, password)
 
 def splashpage(request):
