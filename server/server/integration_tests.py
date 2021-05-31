@@ -9,13 +9,6 @@ def test_getDbConnection():
 def test_getEmptyUserData():
     assert siteutils.getEmptyUserData() == {} 
 
-def test_getUserInfo():
-
-    assert True
-
-def test_addUserUpload():
-    assert True
-
 def test_areUserCredentialsValid_present():
     testUsername = "username"
     testPassword = "password"
@@ -56,8 +49,7 @@ def test_User_getUploadsInfo():
 
 def test_User_addUpload():
     testUser = user.User("username", "password")
-    #assert testUser.addUpload(b"123abc")
-    assert True
+    assert testUser.addUpload("testupload2", b"123abc")
 
 if __name__ == "__main__":
     print("Running tests for db accessor code")

@@ -30,20 +30,19 @@ class User:
     def getUserInfo(self):
         return UserInfo.getUserInfo(username, password)
 
-    def addUpload(uploadData):
-        with getDbConnection(autocommit=False) as connection:
+    def addUpload(self, uploadName, uploadData):
+        with getDbConnection() as connection:
+            connection.autocommit = False
             with connection.cursor() as cursor:
                 try:
                     nextUploadId = self.getNextUploadId()
 
-                    uploadInsertQuery = "insert into uploadstbl values (%s)"
-                    cursor.execute(uploadInsertQuery, (self._username,))
+                    uploadInsertQuery = "insert into uploadstbl (uploadname, data) values (%s, %s)"
+                    cursor.execute(uploadInsertQuery, (uploadName, uploadData))
 
-                    result = cursor.fetchone()
+                    usernamexuploadidtblInsertQuery = "insert into usernamexuploadidtbl (username, uploadid) values (%s, %s)"
 
-                    useridxupoadidtblInsertQuery = "insert into useridxupoadidtbl values (%d, %d)"
-
-                    cursor.execute(useridxupoadidtblInsertQuery, (0, nextUploadId))
+                    cursor.execute(usernamexuploadidtblInsertQuery, (self._username, nextUploadId))
 
                     connection.commit()	
 
@@ -51,6 +50,7 @@ class User:
 
                 except Exception as e:
                     connection.rollback()
+                    raise e
 
                     return False
 
