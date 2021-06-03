@@ -3,7 +3,6 @@ import siteutils
 import userinfo
 import user
 
-'''
 def test_getDbConnection():
     assert dbutils.getDbConnection()
 
@@ -47,7 +46,7 @@ def test_User_getUploadsInfo():
     testUser = user.User("username", "password")
     uploadIds = testUser.getUploadsInfo()
     assert uploadIds == [{"uploadid": 4, "uploadname":"testupload"}]
-'''
+
 
 def test_User_addUpload():
     testUser = user.User("username", "password")

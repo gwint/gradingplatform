@@ -37,8 +37,8 @@ class User:
                 try:
                     nextUploadId = self.getNextUploadId()
 
-                    uploadInsertQuery = "insert into uploadstbl (uploadId, uploadname, data) values (%s, %s, %s)"
-                    cursor.execute(uploadInsertQuery, (nextUploadId, uploadName, uploadData))
+                    uploadInsertQuery = "insert into uploadstbl (uploadname, data) values (%s, %s)"
+                    cursor.execute(uploadInsertQuery, (uploadName, uploadData))
 
                     usernamexuploadidtblInsertQuery = "insert into usernamexuploadidtbl (username, uploadid) values (%s, %s)"
 
@@ -55,10 +55,12 @@ class User:
                     return False
 
     def getNextUploadId(self):
-        nextUploadIdQuery = "SELECT AUTO_INCREMENT as auto_increment FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'usercredentialsdb' AND TABLE_NAME = 'uploadstbl'"
+        nextUploadIdQuery = "SELECT count(*) as next_id from uploadstbl"
         with getDbConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(nextUploadIdQuery)
                 result = cursor.fetchone()
 
-                return result.get("auto_increment", None)
+                nextId = result.get("next_id", None)
+                return nextId + 1
+
