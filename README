@@ -1,5 +1,10 @@
 This is a web-based grading platform for computer science assignments
 
+## Start up Instructions:
+1) Go to AWS lightsail and make sure instance is running
+2) Run python3.8 manage.py runserver 0.0.0.0:8000 to start django on port 8000
+3) Head to http://3.239.32.52:8000/projects/gradingplatform/server/
+
 Databases:
 
 	usercredentialsdb
