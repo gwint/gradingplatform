@@ -2,11 +2,14 @@ This is a web-based grading platform for computer science assignments
 
 ## Start up Instructions:
 1) Go to AWS lightsail and make sure instance is running
-2) Run python3.8 manage.py runserver 0.0.0.0:8000 to start django on port 8000
-3) Head to http://3.239.32.52:8000/projects/gradingplatform/server/
+2) Navigate to ~/htdocs/projects/gradingplatform/server
+3) Run python3.8 manage.py runserver 0.0.0.0:8000 to start django on port 8000
+4) Head to http://3.239.32.52:8000/projects/gradingplatform/server/
 
-Databases:
+Current Architecture:
 
+- HTML served via Python django web server running via AWS LightSail
+- MySQL database provided via AWS RDS
 	usercredentialsdb
 	usercredentialsdbcopy
 
@@ -21,4 +24,12 @@ Databases:
 
 		usernamexuploadidtbl:
 			username(varchar), uploadid(int)
+
+- Services:
+	- loginsvc:
+		- Responsible for reading/writing data related to logging in an existing user or signing up a new one; Handles user authentication, retrieves user's assignment sets for browsing
+		- AWS API Gateway api url: https://1v6h7vbzle.execute-api.us-east-1.amazonaws.com/dev
+	- userinfosvc:
+		- Responsible for reading/writing data related to user assignment sets
+		- AWS API Gateway api url: https://f9eibh3avi.execute-api.us-east-1.amazonaws.com/dev
 

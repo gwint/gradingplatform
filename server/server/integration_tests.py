@@ -45,12 +45,18 @@ def test_User_getNextUploadId():
 def test_User_getUploadsInfo():
     testUser = user.User("username", "password")
     uploadIds = testUser.getUploadsInfo()
-    assert uploadIds == [{"uploadid": 4, "uploadname":"testupload"}]
+    assert uploadIds == [{"uploadid": 1, "uploadname":"testupload2"}, \
+                         {"uploadid": 2, "uploadname":"testupload2"}, \
+                         {"uploadid": 3, "uploadname":"testupload2"}, \
+                         {"uploadid": 4, "uploadname":"testupload2"}, \
+                         {"uploadid": 5, "uploadname":"testupload2"}]
 
 
+'''
 def test_User_addUpload():
     testUser = user.User("username", "password")
     assert testUser.addUpload("testupload2", b"123abc")
+'''
 
 if __name__ == "__main__":
     print("Running tests for db accessor code")

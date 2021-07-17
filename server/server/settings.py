@@ -31,6 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["3.239.32.52"]
 
+CONN_MAX_AGE = None
 
 # Application definition
 
