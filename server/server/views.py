@@ -9,11 +9,13 @@ from server.siteutils import tryLogin, addUpload
 
 
 ## TODO: Delete as loginNoArgs should be used instead
+'''
 def login(request, username, password):
     print(str(request))
     print(request.content_type)
     print(f"RequestDump = {request.POST}")
     return tryLogin(request, username, password)
+'''
 
 def loginNoArgs(request):
     print("Inside loginNoArgs")
@@ -47,5 +49,9 @@ def addUserUpload(request):
     print(fileData)
     print(username)
 
-    ##  TODO: Add upload to db
-    return HttpResponse(dumps({"successful": addUpload(fileName, fileData, username)}))
+    isAddSuccessfull = addUpload(fileName, fileData, username)
+    if isAddSuccessfull:
+        ## TODO: Get filename and uploadId's from db for this user
+        pass
+
+    return HttpResponse(dumps({"successful": isAddSuccessfull}))
