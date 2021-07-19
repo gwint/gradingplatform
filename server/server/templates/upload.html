@@ -23,8 +23,10 @@
                 }
             }
 
+            // TODO: Make post request to add uploaded data and update selection of user files
             function addUpload() {
                 alert("Now sending file data to backend");
+
 		const fileUploadInput = document.getElementById("fileUploadInput");
 		alert(fileUploadInput.value);
 
@@ -33,31 +35,30 @@
                     let arrayBuffer = this.result;
                     let array = new Uint8Array(arrayBuffer);
                     const binaryString = String.fromCharCode.apply(null, array);
+		    alert("binary data");
                     alert(binaryString);
 
-		    fetch(ADDUPLOADSVCURL, {
-			"body": JSON.stringify({"uploaddata": binaryString}),
-			"method": "POST"
-		    })
-		    .then(getResponseBody)
-		    .then(function(response) {
-                        const dataUploadSuccessful = response.successful;
-                        console.log(dataUploadSuccessful);
-                        if(dataUploadSuccessful) {
-                            alert("data upload succeeded");
-                            makeTestCreationCenterVisible();
+                    //makeTestCreationCenterVisible();
+
+                    fetch("/addupload/", {
+            		"body": JSON.stringify({"selectedFile": fileUploadInput.value, "fileData": binaryString}),
+            		"method": "POST"
+    		    })
+                    .then(getResponseBody)
+                    .then(function(response) {
+	                const addSuccessful = response.successful;
+	                console.log(addSuccessful);
+                        if(addSuccessful) {
+                            alert("add successful");
                         }
                         else {
-                            alert("data upload failed");
-		        }
-		    })
-		    .catch(function(error) {
-                        alert("Error encountered when performing data upload!");
-                        console.error(error);
+                            alert("add not successfull");
+                        }
                     });
                 }
 
                 reader.readAsArrayBuffer(fileUploadInput.files[0]);
+		return true;
             }
 	</script>
 	<link rel="stylesheet" href="{% static 'css/upload.css' %}">
@@ -65,12 +66,17 @@
     <body>
 	<title id="pageTitle">{{username}} GradeIt Page</title>
 	<h1 id="mainPageMessage">Welcome to GradeIt, {{username}}</h1>
+	<ul id="batches">
+	    <li>Batch 1</li>
+	    <li>Batch 2</li>
+	</ul>
 	<center id="batchRetrievalCenter">
-	    <label>Current Batch:</label>
-	    <label id="selectedBatch">None Selected</label><br>
-            <input type="file" id="fileUploadInput"></input><br>
-            <button id="fileUploadBtn">Upload Files</button>
-	    <button id="setUploadFormat">Set Upload Format</button>
+	   <label>Current Batch:</label>
+	   <label id="selectedBatch">None Selected</label><br>
+           <input type="hidden" id="fileDataUpload" name="fileData"></input>
+	   <input type="file" id="fileUploadInput" name="selectedFile"></input><br>
+           <button id="fileUploadBtn">Upload Files</button>
+	   <button id="setUploadFormat">Set Upload Format</button>
 	</center>
 	<center id="quickTestCreationCenter">
 	    <p>The quick test creator will go here</p>

@@ -22,6 +22,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^login/([a-zA-Z0-9_]+)/([a-zA-Z0-9_]+)/', views.login),
+    url(r'^login', views.loginNoArgs),
     url(r'addupload/', views.addUserUpload),
     url(r'', views.splashpage),
 ]

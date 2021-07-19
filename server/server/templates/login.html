@@ -2,91 +2,6 @@
 <html>
     <head>
         <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function(event) {
-
-		    const LOGINSVCURL = "https://1v6h7vbzle.execute-api.us-east-1.amazonaws.com/dev";
-		    const USERINFOSVCURL = "https://f9eibh3avi.execute-api.us-east-1.amazonaws.com/dev";
-
-		    const logInBtn = document.getElementById("loginBtn");
-
-		    logInBtn.onclick = function() {
-   		        const usernameInput = document.getElementById("username");
-		        const username = usernameInput.value;
-
-		        const passwordInput = document.getElementById("password");
-		        const password = passwordInput.value;
-
-			logIn(username, password, false);
-		    }
-
-		    const signUpBtn = document.getElementById("signupBtn");
-		    signUpBtn.onclick = function() {
-			//logIn(username, password, true);
-		    }
-
-	    });
-
-            function logIn(username, password, isNewUser) {
-		console.log(username);
-		console.log(password);
-	        if(isNewUser) {
-		    console.log(`Logging in user for the first time w/ credentials, u: ${username} p: ${password}`);
-		}
-		else {
-		    console.log(`Logging in existent user w/ credentials, u: ${username} p: ${password}`);
-		}
-
-		// Redirect to url for login
-		location.assign(`http://3.239.32.52:8000/login/${username}/${password}/`);
-            }
-
-            function getUserInformation(username) {
-                console.log(`Retrieving account information for username ${username}`)
-                fetch(USERINFOSVCURL, {
-                    "body": JSON.stringify({"username": username}),
-                    "method": "POST"
-                })
-                .then(getResponseBody)
-                .then(function(response) {
-                    const userInfoRetrievalSuccessful = response.successful;
-                    console.log(userInfoRetrievalSuccessful);
-                    if(userInfoRetrievalSuccessful) {
-                        alert("user info retrieval successful");
-                    }
-                    else {
-                        alert("user info retrieval not successful");
-                    }
-                });
-            }
-
-            function getResponseBody(response) {
-		if(response.status >= 200 && response.status < 300) {
-		    return Promise.resolve(response.json());
-		}
-		else {
-		    alert("error in response");
-		    return Promise.reject(new Error(response.statusText));
-		}
-            } 
-
-            function signUp(username, password) {
-                fetch(LOGINSVCURL, {
-                    "body": JSON.stringify({"username": username, "password": password}),
-                    "method": "POST"
-                })
-                .then(getResponseBody)
-                .then(function(response) {
-                    const signUpSuccessful = response.addedSuccessful;
-                    console.log(signUpSuccessful);
-                    if(signUpSuccessful) {
-                        alert("sign up successful");
-                    }
-                    else {
-                        alert("already signed up");
-                    }
-                });
-            }
-
 	</script>
 	<link rel="stylesheet" href="{% static 'css/login.css' %}">
     </head>
@@ -96,12 +11,14 @@
 	<title>GradeIt Signup Page</title>
 	<h1 id="mainHeaderMessage">Welcome to GradeIt</h1>
         <center id="signInCenter">
+            <form id="credentialsSubmissionForm" action="/login/" method="POST">
             <label for="username">Username</input>
-            <input type="text" id="username"></input><br>
+            <input type="text" name="username" id="username"></input><br>
             <label for="password">Password&nbsp</input>
-            <input type="text" id="password"></input><br>
+            <input type="text" name="password" id="password"></input><br>
             <button id="loginBtn">Login</button>
-            <button id="signupBtn">Sign Up</button>
+	    </form>
+            <input type="submit" id="signupBtn" value="Sign Up"></input>
         </center>
         <footer>
         </footer>
