@@ -41,7 +41,7 @@
                     //makeTestCreationCenterVisible();
 
                     fetch("/addupload/", {
-            		"body": JSON.stringify({"selectedFile": fileUploadInput.value, "fileData": binaryString}),
+			    "body": JSON.stringify({"selectedFile": fileUploadInput.value, "fileData": binaryString, "username": "{{username}}"}),
             		"method": "POST"
     		    })
                     .then(getResponseBody)

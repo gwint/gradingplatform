@@ -2,8 +2,8 @@ import sys
 import os
 
 import pymysql.cursors
-from userinfo import UserInfo
-from dbutils import getDbConnection
+from server.userinfo import UserInfo
+from server.dbutils import getDbConnection
 
 class User:
     def __init__(self, username, password=""):
