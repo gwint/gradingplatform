@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from json import dumps, loads
 
-from server.siteutils import tryLogin, addUpload
+from server.siteutils import tryLogin, addUpload, getUploads
 
 
 ## TODO: Delete as loginNoArgs should be used instead
@@ -45,13 +45,18 @@ def addUserUpload(request):
     fileName = requestDict["selectedFile"]
     fileData = requestDict["fileData"]
     username = requestDict["username"]
-    print(fileName)
-    print(fileData)
-    print(username)
 
     isAddSuccessfull = addUpload(fileName, fileData, username)
+    uploads = []
     if isAddSuccessfull:
-        ## TODO: Get filename and uploadId's from db for this user
-        pass
+        uploads = getUploads(username) 
+        print("uploads:", uploads)
 
-    return HttpResponse(dumps({"successful": isAddSuccessfull}))
+    return HttpResponse( \
+                dumps(\
+                    { \
+                        "successful": isAddSuccessfull, \
+                        "uploads": uploads \
+                    } \
+                ) \
+           )

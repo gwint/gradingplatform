@@ -5,17 +5,6 @@ import pymysql.cursors
 from server.userinfo import UserInfo
 from server.dbutils import getDbConnection
 
-class Upload:
-    def __init__(self, uploadId, uploadName):
-        self._uploadId = uploadId
-        self._uploadName = uploadName
-
-    def getUploadId(self):
-        return self._uploadId
-
-    def getUploadName(self):
-        return self._uploadName
-
 class User:
     def __init__(self, username, password=""):
         self._username = username
@@ -27,7 +16,7 @@ class User:
                 try:
                     uploadIds = []
 
-                    fetchUploadsInfoQuery = 'select b.uploadid, b.uploadname from usernamexuploadidtbl as a inner join uploadstbl as b on a.uploadid=b.uploadid where a.username=%s'
+                    fetchUploadsInfoQuery = 'select b.uploadid as uploadid, b.uploadname as uploadname from usernamexuploadidtbl as a inner join uploadstbl as b on a.uploadid=b.uploadid where a.username=%s'
                     cursor.execute(fetchUploadsInfoQuery, (self._username,))
 
                     return [x for x in cursor.fetchall()]
@@ -40,9 +29,6 @@ class User:
 
     def getUserInfo(self):
         return UserInfo.getUserInfo(username, password)
-
-    def getUploads(self):
-        return []
 
     def addUpload(self, uploadName, uploadData):
         with getDbConnection() as connection:

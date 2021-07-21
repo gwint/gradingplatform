@@ -18,3 +18,7 @@ def getEmptyUserData():
 def addUpload(filename, fileData, username):
     user = User(username)
     return user.addUpload(filename, fileData)
+
+def getUploads(username):
+    user = User(username)
+    return user.getUploadsInfo()

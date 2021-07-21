@@ -50,6 +50,24 @@
 	                console.log(addSuccessful);
                         if(addSuccessful) {
                             alert("add successful");
+			    // TODO: Display upload id's and names in a table
+			    alert(response.uploads);
+			    console.log(response.uploads);
+			    let table = document.createElement("table");
+			    for(const uploadInfo of response.uploads) {
+		                let row = document.createElement("tr"); 
+				let idCol = document.createElement("td");
+				idCol.innerHTML = uploadInfo["uploadid"];
+				idCol.style.display = "none";
+				let nameCol = document.createElement("td");
+				nameCol.innerHTML = uploadInfo["uploadname"];
+
+				row.appendChild(idCol);
+				row.appendChild(nameCol);
+
+				table.appendChild(row);
+		            }
+			    document.body.appendChild(table);
                         }
                         else {
                             alert("add not successfull");
@@ -63,7 +81,7 @@
 	</script>
 	<link rel="stylesheet" href="{% static 'css/upload.css' %}">
     </head>
-    <body>
+    <body id="body">
 	<title id="pageTitle">{{username}} GradeIt Page</title>
 	<h1 id="mainPageMessage">Welcome to GradeIt, {{username}}</h1>
 	<ul id="batches">
