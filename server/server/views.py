@@ -39,6 +39,25 @@ def splashpage(request):
    response["Content-Type"] = "text/html"
    return render(request, "login.html", {})
 
+## TODO: Add code to retrieve user uploads from db
+def getUserUploads(request):
+    requestDict = loads(request.body)
+    username = requestDict["username"]
+
+    uploads = getUploads(username)
+    print("uploads:", uploads)
+    if len(uploads) == 0:
+        console.log("No uploads retrieved for this user")
+
+    return HttpResponse( \
+                dumps(\
+                    { \
+                        "uploads": uploads \
+                    } \
+                ) \
+           )
+    return 
+
 @csrf_exempt
 def addUserUpload(request):
     requestDict = loads(request.body)

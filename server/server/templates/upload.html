@@ -2,10 +2,36 @@
 <html>
     <head>
         <script type="text/javascript">
-            const ADDUPLOADSVCURL = "https://1uamqmqk6k.execute-api.us-east-1.amazonaws.com/dev";
 	    document.addEventListener("DOMContentLoaded", function(event) {
 	        let fileUploadBtn = document.getElementById("fileUploadBtn");
 		fileUploadBtn.onclick = addUpload;
+
+		let batchesTable = document.getElementById("currentBatches");
+		fetch("/getuploads/", {
+			"body": JSON.stringify({"username": "{{username}}"}),
+            		"method": "POST"
+                 })
+                 .then(getResponseBody)
+                 .then(function(response) {
+		     alert(response.uploads);
+		     console.log(response.uploads);
+		     let table = document.getElementById("currentBatches"); // document.createElement("table");
+		     for(const uploadInfo of response.uploads) {
+		         let row = document.createElement("tr"); 
+		         let idCol = document.createElement("td");
+		         idCol.innerHTML = uploadInfo["uploadid"];
+		         idCol.style.display = "none";
+		         let nameCol = document.createElement("td");
+		         nameCol.innerHTML = uploadInfo["uploadname"];
+		         nameCol.onclick = selectRow;
+
+		         row.appendChild(idCol);
+		         row.appendChild(nameCol);
+
+		         table.appendChild(row);
+		     }
+                });
+
             });
 
             function makeTestCreationCenterVisible() {
@@ -21,6 +47,11 @@
 	            alert("error in response");
 	            return Promise.reject(new Error(response.statusText));
                 }
+            }
+
+            function selectRow() {
+		alert(JSON.stringify(this));
+                alert("clicked row");
             }
 
             // TODO: Make post request to add uploaded data and update selection of user files
@@ -41,7 +72,7 @@
                     //makeTestCreationCenterVisible();
 
                     fetch("/addupload/", {
-			    "body": JSON.stringify({"selectedFile": fileUploadInput.value, "fileData": binaryString, "username": "{{username}}"}),
+			"body": JSON.stringify({"selectedFile": fileUploadInput.value, "fileData": binaryString, "username": "{{username}}"}),
             		"method": "POST"
     		    })
                     .then(getResponseBody)
@@ -50,10 +81,9 @@
 	                console.log(addSuccessful);
                         if(addSuccessful) {
                             alert("add successful");
-			    // TODO: Display upload id's and names in a table
 			    alert(response.uploads);
 			    console.log(response.uploads);
-			    let table = document.createElement("table");
+			    let table = document.getElementById("currentBatches"); // document.createElement("table");
 			    for(const uploadInfo of response.uploads) {
 		                let row = document.createElement("tr"); 
 				let idCol = document.createElement("td");
@@ -61,13 +91,13 @@
 				idCol.style.display = "none";
 				let nameCol = document.createElement("td");
 				nameCol.innerHTML = uploadInfo["uploadname"];
+				nameCol.onclick = selectRow;
 
 				row.appendChild(idCol);
 				row.appendChild(nameCol);
 
 				table.appendChild(row);
 		            }
-			    document.body.appendChild(table);
                         }
                         else {
                             alert("add not successfull");
@@ -88,6 +118,9 @@
 	    <li>Batch 1</li>
 	    <li>Batch 2</li>
 	</ul>
+	<table id="currentBatches">
+	    <tr><td>TBA</td></tr>
+	</table>
 	<center id="batchRetrievalCenter">
 	   <label>Current Batch:</label>
 	   <label id="selectedBatch">None Selected</label><br>

@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^login', views.loginNoArgs),
     url(r'addupload/', views.addUserUpload),
+    url(r'getuploads/', views.getUserUploads),
     url(r'', views.splashpage),
 ]
